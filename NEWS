@@ -1,6 +1,27 @@
 ipt-ratelimit NEWS
 ==================
 
+0.3.2 (2020-08-18)
+
+    * Fix soft lockup if used via nftables.
+
+0.3.1 (2020-04-24)
+
+    * Maintenance release with small fixes.
+    * Kernel compatibility with 5.6.
+    * Update contact email.
+
+0.3 (2017-05-10)
+
+    * Support for CIDR notation.
+    * Support for IPv6.
+
+0.2 (2015-11-13)
+
+    * Allow to hide warning messages.
+    * Allow updating of existing rules.
+    * Can specify behavior for 'not matched' packets.
+    * Code audit.
 
 0.1 (2015-09-20)
 

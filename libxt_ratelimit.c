@@ -1,6 +1,6 @@
 /*
  * An implementation of committed access rate for Linux iptables
- * (c) 2015 <abc@telekom.ru>
+ * (c) 2015-2017 <abc@openwall.com>
  *
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,6 @@
  *
  */
 
-#define _BSD_SOURCE 1
-#define _ISOC99_SOURCE 1
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -41,7 +39,7 @@ static void ratelimit_help(void)
 "  --ratelimit-set <name>    Name of the ratelimit set to be used.\n"
 "                            DEFAULT will be used if none given.\n"
 "  --ratelimit-mode <mode>   Address match: src or dst.\n"
-"xt_ratelimit by: ABC <abc@telekom.ru>.\n");
+"xt_ratelimit by: ABC <abc@openwall.com>.\n");
 }
 
 enum {
@@ -131,6 +129,19 @@ static struct xtables_match ratelimit_mt_reg[] = {
 		.name		= "ratelimit",
 		.version	= XTABLES_VERSION,
 		.family		= NFPROTO_IPV4,
+		.size		= XT_ALIGN(sizeof(struct xt_ratelimit_mtinfo)),
+		.userspacesize	= offsetof(struct xt_ratelimit_mtinfo, ht),
+		.help		= ratelimit_help,
+		.init		= ratelimit_init,
+		.print		= ratelimit_print,
+		.save		= ratelimit_save,
+		.x6_options	= ratelimit_opts,
+		.x6_parse	= ratelimit_parse,
+	},
+	{
+		.name		= "ratelimit",
+		.version	= XTABLES_VERSION,
+		.family		= NFPROTO_IPV6,
 		.size		= XT_ALIGN(sizeof(struct xt_ratelimit_mtinfo)),
 		.userspacesize	= offsetof(struct xt_ratelimit_mtinfo, ht),
 		.help		= ratelimit_help,
